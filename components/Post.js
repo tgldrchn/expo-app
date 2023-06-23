@@ -1,9 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 
 export default function Post({ value }) {
+  const deletePost = async (id) => {
+    fetch(`http://192.168.4.72:3000/api/get-posts?_id=${id}`);
+  };
   return (
-    <View style={styles.miniContainer}>
+    <Pressable
+      style={styles.miniContainer}
+      onPress={() => deletePost(value._id)}
+    >
       <View style={styles.profileContainer}>
         <Image
           style={styles.image}
@@ -22,7 +28,7 @@ export default function Post({ value }) {
       <View style={styles.textContainer}>
         <Text>{value.text}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 const styles = StyleSheet.create({
