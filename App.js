@@ -24,33 +24,48 @@ export default function App() {
   }, [posts]);
 
   const createPost = async () => {
-    console.log(name, text);
+    try {
+      fetch("http://192.168.4.72:3000/api/create-posts", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: text,
+          name: name,
+        }),
+      }).then((res) => res.json());
+      alert("succesfully posted");
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView style={{ opacity: toggle ? "0.1" : "1", zIndex: 0 }}>
-        <View style={styles.container}>
-          {posts &&
-            posts.map((e) => {
-              return <Post value={e} key={e._id} />;
-            })}
-        </View>
-      </ScrollView>
+    <SafeAreaView style={styles.bigContainer}>
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            setToggle(!toggle);
+          }}
+        >
+          <Text style={{ fontSize: 30, color: "white" }}>+</Text>
+        </Pressable>
+      </View>
       <View
         style={{
+          marginVertical: 20,
           width: 350,
-          height: 250,
+          height: 150,
           backgroundColor: "white",
-          position: "absolute",
-          top: 200,
           alignSelf: "center",
           justifyContent: "center",
           alignItems: "center",
           zIndex: 1,
           borderRadius: 10,
           display: toggle ? "flex" : "none",
-          opacity: toggle ? "1" : "0.5",
           borderWidth: 1,
           borderColor: "white",
           shadowColor: "#00B3FF",
@@ -59,33 +74,49 @@ export default function App() {
           shadowRadius: 3,
         }}
       >
-        <TextInput
-          placeholder="write your name"
-          style={styles.input}
-          onChangeText={(e) => setName(e)}
-        />
-        <TextInput
-          placeholder="write text !!!!"
-          style={styles.input}
-          onChangeText={(e) => setText(e)}
-        />
-        <Pressable title="enter" style={styles.pressabel} onPress={createPost}>
-          <Text style={{ color: "white" }}>Enter</Text>
-        </Pressable>
+        <View style={{ flexDirection: "row" }}>
+          <TextInput
+            placeholder="write your name"
+            style={styles.input}
+            onChangeText={(e) => setName(e)}
+          />
+          <Pressable
+            title="enter"
+            style={{ width: 70, height: 40 }}
+          ></Pressable>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <TextInput
+            placeholder="write text !!!!"
+            style={styles.input}
+            onChangeText={(e) => setText(e)}
+          />
+          <Pressable
+            title="enter"
+            style={styles.pressabel}
+            onPress={createPost}
+          >
+            <Text style={{ color: "white" }}>Enter</Text>
+          </Pressable>
+        </View>
       </View>
-      <Pressable
-        style={styles.button}
-        onPress={() => {
-          setToggle(!toggle);
-        }}
-      >
-        <Text style={{ fontSize: "30", color: "white" }}>+</Text>
-      </Pressable>
+      <ScrollView>
+        <View style={styles.container}>
+          {posts &&
+            posts.map((e) => {
+              return <Post value={e} key={e._id} />;
+            })}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  bigContainer: {
+    flex: 1,
+    backgroundColor: "#00B3FF",
+  },
   container: {
     flex: 1,
     backgroundColor: "#00B3FF",
@@ -94,16 +125,20 @@ const styles = StyleSheet.create({
     overflow: "scroll",
     zIndex: 0,
   },
+  buttonContainer: {
+    width: 350,
+    height: 70,
+    alignSelf: "center",
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
   button: {
     width: 50,
     height: 50,
     backgroundColor: "#00B3FF",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
     borderRadius: 10,
-    top: 54,
-    right: 10,
     borderWidth: 1,
     borderColor: "white",
     shadowColor: "#00B3FF",
@@ -114,8 +149,8 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 0.5,
     borderColor: "#00B3FF",
-    width: 300,
-    height: 50,
+    width: 200,
+    height: 40,
     borderRadius: 10,
     marginVertical: 10,
     padding: 10,
@@ -124,10 +159,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 1,
+    marginRight: 10,
   },
   pressabel: {
-    width: 100,
-    height: 50,
+    width: 70,
+    height: 40,
     backgroundColor: "#00B3FF",
     borderRadius: 10,
     justifyContent: "center",
