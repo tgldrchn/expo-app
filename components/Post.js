@@ -16,16 +16,16 @@ export default function Post({ value }) {
 
   const deletePost = async (id) => {
     try {
-      fetch(`http://192.168.4.72:3000/api/delete-posts?_id=${id}`);
+      fetch(`http://192.168.4.136:3000/api/delete-posts?_id=${id}`);
       alert("succesfully deleted");
     } catch (error) {
-      alert(error);
+      alert(error.message);
     }
   };
 
   const uptadePost = async (id, text) => {
     try {
-      fetch(`http://192.168.4.72:3000/api/uptade-posts?_id=${id}`, {
+      fetch(`http://192.168.4.136:3000/api/update-posts?_id=${id}`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -36,8 +36,9 @@ export default function Post({ value }) {
         }),
       }).then((res) => res.json());
       alert("succesfully edited");
+      setEditText("");
     } catch (error) {
-      alert(error);
+      alert(error.message);
     }
   };
   return (
@@ -45,7 +46,7 @@ export default function Post({ value }) {
       <View style={styles.profileContainer}>
         <Image
           style={styles.image}
-          source="https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg"
+          source="https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg"
         />
         <View style={styles.nameContainer}>
           <Text style={styles.name}>{value.name}</Text>
@@ -71,14 +72,14 @@ export default function Post({ value }) {
           right: 30,
           width: 100,
           height: 70,
-          backgroundColor: "#00B3FF",
+          backgroundColor: "#004C99",
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 10,
           borderRadius: 10,
           borderWidth: 1,
           borderColor: "white",
-          shadowColor: "#00B3FF",
+          shadowColor: "#004C99",
           shadowOffset: { width: -1, height: 1 },
           shadowOpacity: 1,
           shadowRadius: 1,
@@ -108,6 +109,7 @@ export default function Post({ value }) {
         }}
       >
         <TextInput
+          value={editText}
           placeholder="edit text !!!!"
           style={styles.input}
           onChangeText={(e) => setEditText(e)}
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#00B3FF",
+    borderColor: "#004C99",
     shadowColor: "white",
     shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 1,
@@ -143,6 +145,8 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "green",
     borderRadius: 50,
+    borderColor: "#004C99",
+    borderWidth: 1,
   },
   profileContainer: {
     height: 50,
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
     width: 5,
     height: 5,
     borderRadius: 50,
-    backgroundColor: "#00B3FF",
+    backgroundColor: "#004C99",
     marginVertical: 1,
   },
   button: {
@@ -189,25 +193,25 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#00B3FF",
+    borderColor: "#004C99",
     shadowColor: "white",
     shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 1,
   },
   text: {
-    color: "grey",
+    color: "#004C99",
   },
   input: {
     borderWidth: 0.5,
-    borderColor: "#00B3FF",
+    borderColor: "#004C99",
     width: 200,
     height: 40,
     borderRadius: 10,
     marginVertical: 10,
     padding: 10,
-    color: "#00B3FF",
-    shadowColor: "#00B3FF",
+    color: "#004C99",
+    shadowColor: "#004C99",
     shadowOffset: { width: -1, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 1,
@@ -216,14 +220,14 @@ const styles = StyleSheet.create({
   pressabel: {
     width: 70,
     height: 40,
-    backgroundColor: "#00B3FF",
+    backgroundColor: "#004C99",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
     borderWidth: 1,
     borderColor: "white",
-    shadowColor: "#00B3FF",
+    shadowColor: "#004C99",
     shadowOffset: { width: -1, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 1,

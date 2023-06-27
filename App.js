@@ -16,16 +16,20 @@ export default function App() {
   const [text, setText] = useState("");
   const [name, setName] = useState("");
   useEffect(() => {
-    fetch("http://192.168.4.72:3000/api/get-posts")
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data.documents);
-      });
+    try {
+      fetch("http://192.168.4.136:3000/api/get-posts")
+        .then((res) => res.json())
+        .then((data) => {
+          setPosts(data.documents);
+        });
+    } catch (error) {
+      alert(error.message);
+    }
   }, [posts]);
 
   const createPost = async () => {
     try {
-      fetch("http://192.168.4.72:3000/api/create-posts", {
+      fetch("http://192.168.4.136:3000/api/create-posts", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -37,38 +41,30 @@ export default function App() {
         }),
       }).then((res) => res.json());
       alert("succesfully posted");
+      setName("");
+      setText("");
     } catch (error) {
-      alert(error);
+      alert(error.message);
     }
   };
 
   return (
     <SafeAreaView style={styles.bigContainer}>
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            setToggle(!toggle);
-          }}
-        >
-          <Text style={{ fontSize: 30, color: "white" }}>+</Text>
-        </Pressable>
-      </View>
       <View
         style={{
           marginVertical: 20,
+          padding: 10,
           width: 350,
           height: 150,
           backgroundColor: "white",
           alignSelf: "center",
           justifyContent: "center",
-          alignItems: "center",
           zIndex: 1,
           borderRadius: 10,
           display: toggle ? "flex" : "none",
           borderWidth: 1,
-          borderColor: "white",
-          shadowColor: "#00B3FF",
+          borderColor: "#004C99",
+          shadowColor: "white",
           shadowOffset: { width: -2, height: 4 },
           shadowOpacity: 1,
           shadowRadius: 3,
@@ -76,6 +72,7 @@ export default function App() {
       >
         <View style={{ flexDirection: "row" }}>
           <TextInput
+            value={name}
             placeholder="write your name"
             style={styles.input}
             onChangeText={(e) => setName(e)}
@@ -87,6 +84,7 @@ export default function App() {
         </View>
         <View style={{ flexDirection: "row" }}>
           <TextInput
+            value={text}
             placeholder="write text !!!!"
             style={styles.input}
             onChangeText={(e) => setText(e)}
@@ -108,6 +106,15 @@ export default function App() {
             })}
         </View>
       </ScrollView>
+
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          setToggle(!toggle);
+        }}
+      >
+        <Text style={{ fontSize: 30, color: "white" }}>+</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -115,11 +122,11 @@ export default function App() {
 const styles = StyleSheet.create({
   bigContainer: {
     flex: 1,
-    backgroundColor: "#00B3FF",
+    backgroundColor: "#F3F3F3",
   },
   container: {
     flex: 1,
-    backgroundColor: "#00B3FF",
+    backgroundColor: "#F3F3F3",
     alignItems: "center",
     justifyContent: "center",
     overflow: "scroll",
@@ -135,27 +142,30 @@ const styles = StyleSheet.create({
   button: {
     width: 50,
     height: 50,
-    backgroundColor: "#00B3FF",
+    backgroundColor: "#004C99",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "white",
-    shadowColor: "#00B3FF",
+    shadowColor: "#004C99",
     shadowOffset: { width: -1, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 1,
+    position: "absolute",
+    bottom: 40,
+    right: 10,
   },
   input: {
     borderWidth: 0.5,
-    borderColor: "#00B3FF",
+    borderColor: "#004C99",
     width: 200,
     height: 40,
     borderRadius: 10,
     marginVertical: 10,
     padding: 10,
-    color: "#00B3FF",
-    shadowColor: "#00B3FF",
+    color: "#004C99",
+    shadowColor: "#004C99",
     shadowOffset: { width: -1, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 1,
@@ -164,14 +174,14 @@ const styles = StyleSheet.create({
   pressabel: {
     width: 70,
     height: 40,
-    backgroundColor: "#00B3FF",
+    backgroundColor: "#004C99",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
     borderWidth: 1,
     borderColor: "white",
-    shadowColor: "#00B3FF",
+    shadowColor: "#004C99",
     shadowOffset: { width: -1, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 1,
