@@ -48,11 +48,12 @@ export default function Post({ value, index }) {
       <View style={styles.profileContainer}>
         <Image
           style={styles.image}
-          source="https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+          source="https://www.goodmorningimagesdownload.com/wp-content/uploads/2021/12/Best-Quality-Profile-Images-Pic-Download-2023.jpg"
+          s
         />
         <View style={styles.nameContainer}>
           <Text style={styles.name}>{value.name}</Text>
-          <Text style={styles.ago}>{index} minutes ago</Text>
+          <Text style={styles.ago}>{value.date}</Text>
         </View>
         <Pressable
           style={styles.buttonContainer}
@@ -169,6 +170,7 @@ const styles = StyleSheet.create({
   ago: {
     color: "grey",
     fontWeight: 300,
+    fontSize: 10,
   },
   name: {
     fontWeight: 500,

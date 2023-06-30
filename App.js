@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import Post from "./components/Post";
+import moment from "moment";
 
 export default function App() {
   const [toggle, setToggle] = useState(false);
@@ -38,6 +39,7 @@ export default function App() {
         body: JSON.stringify({
           text: text,
           name: name,
+          date: moment().format("MMM Do YY"),
         }),
       }).then((res) => res.json());
       alert("succesfully posted");
@@ -107,7 +109,6 @@ export default function App() {
             })}
         </View>
       </ScrollView>
-
       <Pressable
         style={styles.button}
         onPress={() => {
