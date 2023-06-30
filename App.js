@@ -43,6 +43,7 @@ export default function App() {
       alert("succesfully posted");
       setName("");
       setText("");
+      setToggle(false);
     } catch (error) {
       alert(error.message);
     }
@@ -101,8 +102,8 @@ export default function App() {
       <ScrollView>
         <View style={styles.container}>
           {posts &&
-            posts.map((e) => {
-              return <Post value={e} key={e._id} />;
+            posts.map((e, i) => {
+              return <Post value={e} index={i} key={e._id} />;
             })}
         </View>
       </ScrollView>

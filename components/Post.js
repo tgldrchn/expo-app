@@ -9,7 +9,7 @@ import {
 import { Image } from "expo-image";
 import { useState } from "react";
 
-export default function Post({ value }) {
+export default function Post({ value, index }) {
   const [toggle, setToggle] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editText, setEditText] = useState("");
@@ -37,6 +37,8 @@ export default function Post({ value }) {
       }).then((res) => res.json());
       alert("succesfully edited");
       setEditText("");
+      setEdit(false);
+      setToggle(false);
     } catch (error) {
       alert(error.message);
     }
@@ -50,7 +52,7 @@ export default function Post({ value }) {
         />
         <View style={styles.nameContainer}>
           <Text style={styles.name}>{value.name}</Text>
-          <Text style={styles.ago}>6 minutes ago</Text>
+          <Text style={styles.ago}>{index} minutes ago</Text>
         </View>
         <Pressable
           style={styles.buttonContainer}
